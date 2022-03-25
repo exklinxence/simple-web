@@ -1,0 +1,77 @@
+### STEP 1
+# the following plugins to jenkins
+# 1. <Docker Pipeline>   version 1.26
+# 2. <Kubernetes Continous Deploy>     version 1.0.0
+
+# this pipeline assumes your machine is a linux distro and the following
+# you have a running kubernetes cluster
+# you have a working docker hub profile
+# you have created your docker login credentials on jenkins
+# you can use the link to add your docker login credential to jenkins
+# assuming you are running jenkins on port 8080
+# host_url:8080/credentials/store/domain/_/newCredentials
+# i created mine and named it dockerhublogincredential
+
+# create kubernetes credentials and name it kubenetes
+# copy the content of your kubernetes config file mine is at ~/.kube/config
+# select enter manually and paste the value of your kubernetes config file
+
+
+### STEP 2
+# Create a new Pipeline Job give it a name of your choice 
+# select pipeline script
+# copy all the content of this file  and paste it in the editor
+# click save
+# then run build
+
+pipeline {
+
+  environment{
+    dockerimagename = "collins/pythonapp"
+    dockerImage = ""
+  }
+
+  agent any
+
+  stages{
+
+    stage('Checkout Source') {
+      steps {
+        git 'https://github.com/yeasy/simple-web.git'
+        
+      }
+    }
+
+    stage('Build image') {
+      steps {
+        script {
+          dockerImage = docker.build dockerimagename
+        }
+      }
+    }
+
+    stage('Pushing Image to Docker Registry') {
+      environment{
+        registryCredential = 'dockerhubloginCredential'
+      }
+      steps{
+        script{
+          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ){
+            dockerImage.push("latest")
+          }
+        }
+      }
+    }
+
+    stage('Deploy python App to Kubenetes') {
+      steps{
+        script {
+          kubernetesDeploy(configs: "deploymentandservice.yml", kubeconfigId: "kubernetes")
+        }
+      }
+    }
+
+  }
+}
+
+
