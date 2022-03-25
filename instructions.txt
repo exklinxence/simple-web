@@ -1,0 +1,32 @@
+# This pipeline is working with the github repo
+# https://github.com/exklinxence/simple-web
+
+# i forked the sample project and added my kubernetes and jenkins scripts
+# i could also create another repo for kubernetes and jenkins scripts but i feel this is a small project
+
+### STEP 1
+# the following plugins to jenkins
+# 1. <Docker Pipeline>   version 1.26
+# 2. <Kubernetes Continous Deploy>     version 1.0.0
+
+# this pipeline assumes your machine is a linux distro and the following
+# please use your dockerhub username to name your image
+# you have a running kubernetes cluster
+# you have a working docker hub profile
+# you have created your docker login credentials on jenkins
+# you can use the link to add your docker login credential to jenkins
+# assuming you are running jenkins on port 8080
+# host_url:8080/credentials/store/domain/_/newCredentials
+# i created mine and named it dockerhublogincredential
+
+# create kubernetes credentials and name it kubenetes
+# copy the content of your kubernetes config file mine is at ~/.kube/config
+# select enter manually and paste the value of your kubernetes config file
+
+
+### STEP 2
+# Create a new Pipeline Job give it a name of your choice 
+# select pipeline script
+# copy all the content of this file  and paste it in the editor
+# click save
+# then run build

@@ -17,7 +17,7 @@ metadata:
       spec:
         containers:
         - name: hello-world
-          image: collins/pythonapp:latest
+          image: klinz01/pythonapp:latest
           ports:
           - containerPort: 80
 
