@@ -1,6 +1,6 @@
 ## This is kubernetes version 1.21
 apiVersion: apps/v1
-kind: Deploymeny
+kind: Deployment
 metadata:
   name: simple-python-app
   labels:
