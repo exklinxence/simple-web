@@ -1,8 +1,8 @@
 ## This is kubernetes version 1.21
 apiVersion: apps/v1
-kind: Deploymeny
+kind: Deployment
 metadata:
-  name: simple-python-app
+  name: simplepythonapp
   labels:
     app: pythonapp
   spec:
@@ -30,7 +30,7 @@ metadata:
   name: pythonapp-service
 spec:
   selector:
-    app: pyhtonapp
+    app: pythonapp
   type: LoadBalancer
   ports:
   - protocol: TCP
