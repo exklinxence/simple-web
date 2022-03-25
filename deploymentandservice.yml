@@ -16,7 +16,7 @@ metadata:
           app: pythonapp
       spec:
         containers:
-        - name: hello-world
+        - name: pythonapp
           image: klinz01/pythonapp:latest
           ports:
           - containerPort: 80
